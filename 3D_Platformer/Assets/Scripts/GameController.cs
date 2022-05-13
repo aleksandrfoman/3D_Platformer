@@ -8,55 +8,34 @@ public class GameController : MonoBehaviour
     private Platform[] platformPrefabs;
     [SerializeField]
     private Platform lastPlatform;
+
     [SerializeField]
-    private int minUpDistSpawn;
+    private float minDist;
     [SerializeField]
-    private int maxUpDistSpawn;
-    [SerializeField]
-    private int minForwardDistSpawn;
-    [SerializeField]
-    private int maxForwardDistSpawn;
-    private SpawnDirection lastSpawnDirection;
-    private void Start()
-    {
-        
-    }
+    private float maxDist;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKey(KeyCode.F))
         {
             SpawnPlatform();
         }
     }
 
-    private void SpawnPlatform()
+    public void SpawnPlatform()
     {
         int rndPrefab = Random.Range(0, platformPrefabs.Length);
         lastPlatform = Instantiate(platformPrefabs[rndPrefab]
-                      ,lastPlatform.transform.position+GetRandomSpawnPos(platformPrefabs[rndPrefab].Size)
+                      ,GetRandomSpawnPos(platformPrefabs[rndPrefab].Size)
                       ,Quaternion.identity);
     }
 
     private Vector3 GetRandomSpawnPos(int sizePlatform)
     {
-        lastSpawnDirection = (SpawnDirection)Random.Range(0, 3);
-    
+        var newDir = Random.insideUnitCircle.normalized;
+        newDir *= Random.Range(minDist, maxDist);
 
-        int rndUp = Random.Range(minUpDistSpawn, maxUpDistSpawn);
-        int rndForward = Random.Range(minForwardDistSpawn, maxForwardDistSpawn);
-
-        switch (lastSpawnDirection)
-        {
-            case SpawnDirection.forward:
-                return new Vector3(0f, rndUp, sizePlatform+rndForward);
-            case SpawnDirection.left:
-                return new Vector3(-(sizePlatform+rndForward), rndUp, 0f);
-            case SpawnDirection.right:
-                return new Vector3(sizePlatform+rndForward, rndUp, 0f);
-            case SpawnDirection.back:
-                return new Vector3(0f, rndUp,-(sizePlatform+rndForward));
-            default:
-                return new Vector3(0f, 0f, 0f);
-        }
+        return new Vector3(newDir.x, lastPlatform.transform.position.y + Random.Range(1, 2), newDir.y)
+         + new Vector3(lastPlatform.transform.localScale.x, 0, lastPlatform.transform.localScale.z) + new Vector3(sizePlatform, 0, sizePlatform);
     }
 }

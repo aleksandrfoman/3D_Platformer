@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private new Collider collider;
 
+
+    private GameObject lastPlatform;
+
+    [SerializeField] private UnityEvent OnJump;
 
     private void Start()
     {
@@ -44,11 +49,26 @@ public class Player : MonoBehaviour
         get
         {
             var bottomCenterPoint = new Vector3(collider.bounds.center.x, collider.bounds.min.y, collider.bounds.center.z);
-            //создаем невидимую физическую капсулу и проверяем не пересекает ли она обьект который относится к полу
-            //_collider.bounds.size.x / 2 * 0.9f -- эта странная конструкция берет радиус обьекта.
-            // был бы обязательно сферой -- брался бы радиус напрямую, а так пишем по-универсальнее
-            return Physics.CheckCapsule(collider.bounds.center, bottomCenterPoint, collider.bounds.size.x / 2 * groundCheckSize, GroundLayer);
-            // если можно будет прыгать в воздухе, то нужно будет изменить коэфициент 0.9 на меньший.
+            //СЃРѕР·РґР°РµРј РЅРµРІРёРґРёРјСѓСЋ С„РёР·РёС‡РµСЃРєСѓСЋ РєР°РїСЃСѓР»Сѓ Рё РїСЂРѕРІРµСЂСЏРµРј РЅРµ РїРµСЂРµСЃРµРєР°РµС‚ Р»Рё РѕРЅР° РѕР±СЊРµРєС‚ РєРѕС‚РѕСЂС‹Р№ РѕС‚РЅРѕСЃРёС‚СЃСЏ Рє РїРѕР»Сѓ
+            //_collider.bounds.size.x / 2 * 0.9f -- СЌС‚Р° СЃС‚СЂР°РЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС†РёСЏ Р±РµСЂРµС‚ СЂР°РґРёСѓСЃ РѕР±СЊРµРєС‚Р°.
+            // Р±С‹Р» Р±С‹ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ СЃС„РµСЂРѕР№ -- Р±СЂР°Р»СЃСЏ Р±С‹ СЂР°РґРёСѓСЃ РЅР°РїСЂСЏРјСѓСЋ, Р° С‚Р°Рє РїРёС€РµРј РїРѕ-СѓРЅРёРІРµСЂСЃР°Р»СЊРЅРµРµ
+            
+            
+            //РџРѕРјРµРЅСЏС‚СЊ РЅР° sphere cast РЅР°РІРµСЂРЅРѕРµ 
+            
+            Р·Р°Р»СѓРїР° РїРµРЅРёСЃ С…РµСЂ
+            bool check = Physics.CapsuleCast(collider.bounds.center, bottomCenterPoint, collider.bounds.size.x / 2 * groundCheckSize, Vector3.down, out RaycastHit hit);
+            if (hit.collider != null)
+            {
+                if (lastPlatform == null || hit.transform != lastPlatform.transform)
+                {
+                    lastPlatform = hit.transform.gameObject;
+                    OnJump.Invoke();
+                }
+            }
+
+            return check;
+            // РµСЃР»Рё РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РїСЂС‹РіР°С‚СЊ РІ РІРѕР·РґСѓС…Рµ, С‚Рѕ РЅСѓР¶РЅРѕ Р±СѓРґРµС‚ РёР·РјРµРЅРёС‚СЊ РєРѕСЌС„РёС†РёРµРЅС‚ 0.9 РЅР° РјРµРЅСЊС€РёР№.
         }
     }
 
