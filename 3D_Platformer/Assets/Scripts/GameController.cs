@@ -67,9 +67,9 @@ public class GameController : MonoBehaviour
                       , Quaternion.identity);
 
         Vector3 size = platform.SetRandomSize();
-
         platform.transform.position = GetRandomSpawnPos((int) size.x);
         platform.transform.localScale = size;
+        platform.AcitavatePlatform();
         nextPlatform = platform;
         currentPlatform = nextPlatform;
     }

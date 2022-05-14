@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     private new Rigidbody rigidbody;
     [SerializeField]
     private new Collider collider;
+    [SerializeField]
+    private GameObject playerJumpEffect;
+    RaycastHit hit;
 
     private void Start()
     {
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
     {
         if (isGrounded && (Input.GetAxis("Jump") > 0))
         {
+            Instantiate(playerJumpEffect,groundCheck.position, Quaternion.identity);
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
@@ -60,7 +64,6 @@ public class Player : MonoBehaviour
     {
         get
         {
-            RaycastHit hit;
             bool check = Physics.SphereCast(transform.position, groundCheckRadius, Vector3.down, out hit,3f, groundLayer);
 
 
