@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void MoveLogic()
     {
         //rigidbody.AddForce(movementVector * moveSpeed, ForceMode.Impulse);

@@ -27,6 +27,13 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int maxY;
     [Header("Ui")]
+    public bool isStartGame = true;
+    [SerializeField]
+    private GameObject gamePanel;
+    [SerializeField]
+    private GameObject startPanel;
+    [SerializeField]
+    private TMP_Text textTopScore;
     private int score;
     public int Score => score;
     [SerializeField]
@@ -35,6 +42,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+
         if (Instance == null)
         {
             Instance = this;
@@ -47,15 +56,30 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        Application.targetFrameRate = 60;
+        UpdateTopScoreText();
     }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        CheckStartUi();
+    }
+
+    private void CheckStartUi()
+    {
+        if (isStartGame)
         {
-            SpawnPlatform();
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 || Input.GetAxis("Jump") != 0)
+            {
+                gamePanel.SetActive(true);
+                startPanel.SetActive(false);
+                isStartGame = false;
+            }
         }
+    }
+
+    private void UpdateTopScoreText()
+    {
+        int topScore = PlayerPrefs.GetInt("TopScore",0);
+        textTopScore.text = "TOP SCORE" + "\n" + topScore.ToString();
     }
 
     public void SpawnPlatform()
@@ -74,6 +98,10 @@ public class GameController : MonoBehaviour
         currentPlatform = nextPlatform;
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
     private void DestroyPlatform()
     {
         if (backPlatform != null)
