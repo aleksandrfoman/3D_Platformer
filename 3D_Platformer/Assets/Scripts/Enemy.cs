@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
         var angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
         var nextRot = Quaternion.Euler(new Vector3(0, -angle, 0));
 
-        mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, nextRot, rotSpeed * Time.deltaTime);
+        mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, Quaternion.LookRotation(currentPoint.position-mesh.transform.position), rotSpeed * Time.deltaTime);
     }
 
     private void FixedUpdate()
