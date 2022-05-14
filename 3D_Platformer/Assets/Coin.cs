@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Coin : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Coin : MonoBehaviour
     private GameObject coinEffect;
     [SerializeField]
     private float rotateSpeed;
+    
     void Update()
     {
         transform.Rotate(new Vector3(0f, 1f*rotateSpeed, 0f)*Time.deltaTime);
@@ -17,6 +19,7 @@ public class Coin : MonoBehaviour
     {
         if(other.GetComponent<Player>())
         {
+            other.GetComponent<Player>().GetComponent<AudioSource>().Play();
             Instantiate(coinEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
             GameController.Instance.UpdateScore();

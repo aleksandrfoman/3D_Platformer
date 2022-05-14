@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     private GameObject playerJumpEffect;
     RaycastHit hit;
 
+    public UnityEvent OnJump;
+
     private void Start()
     {
         if (groundLayer == gameObject.layer)
@@ -57,6 +59,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(playerJumpEffect,groundCheck.position, Quaternion.identity);
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            OnJump.Invoke();
         }
     }
 
