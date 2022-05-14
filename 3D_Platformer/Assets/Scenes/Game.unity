@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999946, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 0.2953562, g: 0.88198674, b: 1.0516195, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -268,7 +268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526404676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 2.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434058056}
@@ -362,19 +362,7 @@ MonoBehaviour:
   collider: {fileID: 526404678}
   OnJump:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1590735068}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: SpawnPlatform
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!54 &526404682
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -840,11 +828,10 @@ MonoBehaviour:
   platformPrefab: {fileID: 8731287920160829001, guid: a8d5d2e83d8b05e48b3b3f5c479b59d4, type: 3}
   backPlatform: {fileID: 0}
   currentPlatform: {fileID: 8731287918883701710}
-  nextPlatform: {fileID: 0}
-  minDist: 0
-  maxDist: 0
-  minY: 1
-  maxY: 5
+  minDist: 0.5
+  maxDist: 1
+  minY: 0
+  maxY: 0
 --- !u!1001 &1632882746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1212,5 +1199,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.2, y: 1, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}

@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
             if (hit.collider != null)
             {
                 
-                if (GameController.Instance.NextPlatform == null || hit.transform == GameController.Instance.CurrentPlatform.transform)
+                if (GameController.Instance.CurrentPlatform == null || hit.transform == GameController.Instance.CurrentPlatform.transform)
                 {
                     OnJump.Invoke();
                 }
