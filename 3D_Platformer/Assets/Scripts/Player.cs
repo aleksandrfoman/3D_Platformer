@@ -10,22 +10,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float jumpForce;
     [SerializeField]
-    private float groundCheckSize = 0.9f;
+    private LayerMask groundLayer = 1; // 1 == "Default"
     [SerializeField]
-    private LayerMask GroundLayer = 1; // 1 == "Default"
+    private float groundCheckRadius;
+    [SerializeField]
+    Transform groundCheck;
     [SerializeField]
     private new Rigidbody rigidbody;
     [SerializeField]
     private new Collider collider;
-
-
-    private GameObject lastPlatform;
-
-    [SerializeField] private UnityEvent OnJump;
-
+    [SerializeField]
+    private UnityEvent OnJump;
     private void Start()
     {
-        if (GroundLayer == gameObject.layer)
+        if (groundLayer == gameObject.layer)
             Debug.LogError("Player SortingLayer must be different from Ground SourtingLayer!");
     }
 
@@ -44,33 +42,6 @@ public class Player : MonoBehaviour
             return new Vector3(horizontal, 0.0f, vertical);
         }
     }
-    private bool isGrounded
-    {
-        get
-        {
-            var bottomCenterPoint = new Vector3(collider.bounds.center.x, collider.bounds.min.y, collider.bounds.center.z);
-            //создаем невидимую физическую капсулу и проверяем не пересекает ли она обьект который относится к полу
-            //_collider.bounds.size.x / 2 * 0.9f -- эта странная конструкция берет радиус обьекта.
-            // был бы обязательно сферой -- брался бы радиус напрямую, а так пишем по-универсальнее
-            
-            
-            //Поменять на sphere cast наверное 
-            
-            залупа пенис хер
-            bool check = Physics.CapsuleCast(collider.bounds.center, bottomCenterPoint, collider.bounds.size.x / 2 * groundCheckSize, Vector3.down, out RaycastHit hit);
-            if (hit.collider != null)
-            {
-                if (lastPlatform == null || hit.transform != lastPlatform.transform)
-                {
-                    lastPlatform = hit.transform.gameObject;
-                    OnJump.Invoke();
-                }
-            }
-
-            return check;
-            // если можно будет прыгать в воздухе, то нужно будет изменить коэфициент 0.9 на меньший.
-        }
-    }
 
     private void MoveLogic()
     {
@@ -80,9 +51,32 @@ public class Player : MonoBehaviour
 
     private void JumpLogic()
     {
+        Debug.Log(isGrounded);
         if (isGrounded && (Input.GetAxis("Jump") > 0))
         {
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    private bool isGrounded
+    {
+        get
+        {
+            // Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+            RaycastHit hit;
+            bool check = Physics.SphereCast(transform.position, groundCheckRadius, Vector3.down, out hit,3f, groundLayer);
+
+
+            if (hit.collider != null)
+            {
+                
+                if (GameController.Instance.NextPlatform == null || hit.transform == GameController.Instance.CurrentPlatform.transform)
+                {
+                    OnJump.Invoke();
+                }
+            }
+
+            return check;
         }
     }
 }
