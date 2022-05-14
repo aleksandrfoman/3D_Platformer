@@ -1,19 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
+    [Header("Generation")]
     [SerializeField]
     private Platform platformPrefab;
-
     [SerializeField]
     private Platform backPlatform;
     [SerializeField]
     private Platform currentPlatform;
     public Platform CurrentPlatform => currentPlatform;
+    [SerializeField]
+    private Platform nextPlatform;
+    public Platform NextPlatform => nextPlatform;
     [SerializeField]
     private float minDist;
     [SerializeField]
@@ -22,8 +26,11 @@ public class GameController : MonoBehaviour
     private int minY;
     [SerializeField]
     private int maxY;
-
-    //������� ��������
+    [Header("Ui")]
+    private int score;
+    public int Score => score;
+    [SerializeField]
+    private TMP_Text textScore;
     public static GameController Instance { get; private set; }
 
     private void Awake()
@@ -51,36 +58,41 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //��������� ����� �� ���������� � �� ������� ��������� � ����� ������� ���������
     public void SpawnPlatform()
     {
         DestroyPlatform();
         backPlatform = currentPlatform;
-        var platform = Instantiate(platformPrefab
+        Platform platform = Instantiate(platformPrefab
                       , Vector3.zero
                       , Quaternion.identity);
 
-        var size = platform.SetRandomSize();
+        Vector3 size = platform.SetRandomSize();
 
         platform.transform.position = GetRandomSpawnPos((int) size.x);
         platform.transform.localScale = size;
-        currentPlatform = platform;
+        nextPlatform = platform;
+        currentPlatform = nextPlatform;
     }
 
     private void DestroyPlatform()
     {
-        // if (backPlatform != null)
-        // {
-        //     Destroy(backPlatform.gameObject);
-        // }
+        if (backPlatform != null)
+        {
+            Destroy(backPlatform.gameObject);
+            UpdateScore();
+        }
+    }
+
+    public void UpdateScore()
+    {
+        score++;
+        textScore.text = "SCORE:" + ""+score.ToString();
     }
 
     private Vector3 GetRandomSpawnPos(int sizePlatform)
     {
         Vector3 rndVect3 = new Vector3(Random.Range(minDist, maxDist),0f,Random.Range(minDist, maxDist));
 
-
-        
         if (Random.Range(0, 2) == 1)
         {
             rndVect3.x *= -1;

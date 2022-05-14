@@ -19,8 +19,7 @@ public class Player : MonoBehaviour
     private new Rigidbody rigidbody;
     [SerializeField]
     private new Collider collider;
-    [SerializeField]
-    private UnityEvent OnJump;
+
     private void Start()
     {
         if (groundLayer == gameObject.layer)
@@ -51,7 +50,6 @@ public class Player : MonoBehaviour
 
     private void JumpLogic()
     {
-        Debug.Log(isGrounded);
         if (isGrounded && (Input.GetAxis("Jump") > 0))
         {
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -62,7 +60,6 @@ public class Player : MonoBehaviour
     {
         get
         {
-            // Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
             RaycastHit hit;
             bool check = Physics.SphereCast(transform.position, groundCheckRadius, Vector3.down, out hit,3f, groundLayer);
 
@@ -70,9 +67,9 @@ public class Player : MonoBehaviour
             if (hit.collider != null)
             {
                 
-                if (GameController.Instance.CurrentPlatform == null || hit.transform == GameController.Instance.CurrentPlatform.transform)
+                if (GameController.Instance.NextPlatform == null || hit.transform == GameController.Instance.CurrentPlatform.transform)
                 {
-                    OnJump.Invoke();
+                    GameController.Instance.SpawnPlatform();
                 }
             }
 
