@@ -2792,8 +2792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46532b83b09fcc84fbd93a98652e9df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolCount: 1
-  autoExpand: 0
+  poolCount: 2
+  autoExpand: 1
   prefab: {fileID: 1038497605556983165, guid: cd199b56479f2794e871c46b5e3a4632, type: 3}
 --- !u!1001 &1632882746
 PrefabInstance:

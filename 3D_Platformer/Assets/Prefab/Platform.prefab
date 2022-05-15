@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 7
-  spawnCoinChance: 30
+  spawnCoinChance: 100
   coinPrefab: {fileID: 1038497605556983165, guid: cd199b56479f2794e871c46b5e3a4632, type: 3}
   randomSize: 1
   spawnCoin: 1

@@ -16,6 +16,9 @@ public class PoolCoins : MonoBehaviour
 
     private void Awake()
     {
+        this.Pool = new PoolMono<Coin>(this.prefab, this.poolCount, this.transform);
+        this.Pool.autoExpand = autoExpand;
+
         if (Instance == null)
         {
             Instance = this;
@@ -24,11 +27,5 @@ public class PoolCoins : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        this.Pool = new PoolMono<Coin>(this.prefab, this.poolCount, this.transform);
-        this.Pool.autoExpand = autoExpand;
     }
 }
