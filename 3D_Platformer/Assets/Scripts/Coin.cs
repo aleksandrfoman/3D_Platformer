@@ -21,7 +21,7 @@ public class Coin : MonoBehaviour
         {
             other.GetComponent<Player>().GetComponent<AudioSource>().Play();
             Instantiate(coinEffect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            transform.gameObject.SetActive(false);
             GameController.Instance.UpdateScore();
         }    
     }

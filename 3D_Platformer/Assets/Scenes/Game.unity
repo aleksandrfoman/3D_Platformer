@@ -2731,6 +2731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590735067}
   - component: {fileID: 1590735068}
+  - component: {fileID: 1590735069}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2779,6 +2780,21 @@ MonoBehaviour:
   textTopScore: {fileID: 1447221644}
   textLoseScore: {fileID: 1360141207}
   textScore: {fileID: 1408032899}
+--- !u!114 &1590735069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590735066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46532b83b09fcc84fbd93a98652e9df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolCount: 1
+  autoExpand: 0
+  prefab: {fileID: 1038497605556983165, guid: cd199b56479f2794e871c46b5e3a4632, type: 3}
 --- !u!1001 &1632882746
 PrefabInstance:
   m_ObjectHideFlags: 0

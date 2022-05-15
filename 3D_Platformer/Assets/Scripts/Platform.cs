@@ -48,7 +48,8 @@ public class Platform : MonoBehaviour
             float rndDrop = Random.Range(0.01f, 100f);
             if (rndDrop <= spawnCoinChance)
             {
-                Instantiate(coinPrefab,transform.position+new Vector3(0f,3f,0f), Quaternion.identity);
+                var coin = PoolCoins.Instance.Pool.GetFreeElement();
+                coin.transform.position = transform.position + new Vector3(0f, 3f, 0f);
             }
         }
     }
