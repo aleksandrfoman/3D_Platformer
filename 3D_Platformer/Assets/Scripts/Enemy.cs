@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     private GameObject mesh;
     [SerializeField]
     private float rotSpeed;
+    [SerializeField]
+    private float forceAttack;
 
     private void Start()
     {
@@ -27,6 +29,13 @@ public class Enemy : MonoBehaviour
             RndPoint();
         }
         RotateMesh();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.TryGetComponent(out Player player)){
+            player.GetComponent<Rigidbody>().AddForce(-transform.forward * forceAttack, ForceMode.Impulse);
+        }
     }
 
     private void RndPoint()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -33,7 +34,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject startPanel;
     [SerializeField]
+    private GameObject losePanel;
+    [SerializeField]
     private TMP_Text textTopScore;
+    [SerializeField]
+    private TMP_Text textLoseScore;
     private int score;
     public int Score => score;
     [SerializeField]
@@ -71,6 +76,7 @@ public class GameController : MonoBehaviour
             {
                 gamePanel.SetActive(true);
                 startPanel.SetActive(false);
+                losePanel.SetActive(false);
                 isStartGame = false;
             }
         }
@@ -78,6 +84,7 @@ public class GameController : MonoBehaviour
 
     private void UpdateTopScoreText()
     {
+        startPanel.SetActive(true);
         int topScore = PlayerPrefs.GetInt("TopScore",0);
         textTopScore.text = "TOP SCORE" + "\n" + topScore.ToString();
     }
@@ -114,9 +121,27 @@ public class GameController : MonoBehaviour
     public void UpdateScore()
     {
         score++;
-        textScore.text = "SCORE:" + ""+score.ToString();
+        textScore.text = "SCORE "+score.ToString();
     }
 
+    public void ActivateLosePanel()
+    {
+        gamePanel.SetActive(false);
+        startPanel.SetActive(false);
+        losePanel.SetActive(true);
+        textLoseScore.text = "SCORE "+score.ToString();
+    }
+
+    public void RestartGame()
+    {
+        int topScore = PlayerPrefs.GetInt("TopScore", 0);
+        isStartGame = true;
+        if (GameController.Instance.Score > topScore)
+        {
+            PlayerPrefs.SetInt("TopScore", GameController.Instance.Score);
+        }
+        SceneManager.LoadScene(0);
+    }
     private Vector3 GetRandomSpawnPos(int sizePlatform)
     {
         Vector3 rndVect3 = new Vector3(Random.Range(minDist, maxDist),0f,Random.Range(minDist, maxDist));

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -29,13 +28,7 @@ public class CameraFollow : MonoBehaviour
             if (smoothPos.y < 8)
             {
                 smoothPos = new Vector3(transform.position.x, 8f, transform.position.z);
-
-                int topScore = PlayerPrefs.GetInt("TopScore", 0);
-                if (GameController.Instance.Score > topScore)
-                {
-                    PlayerPrefs.SetInt("TopScore", GameController.Instance.Score);
-                }
-                SceneManager.LoadScene(0);
+                GameController.Instance.ActivateLosePanel();
             }
             else
             {
