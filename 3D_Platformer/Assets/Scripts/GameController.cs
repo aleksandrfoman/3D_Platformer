@@ -97,10 +97,8 @@ public class GameController : MonoBehaviour
     {
         DestroyPlatform();
         backPlatform = currentPlatform;
-        Platform platform = Instantiate(platformPrefab
-                      , Vector3.zero
-                      , Quaternion.identity);
 
+        var platform = PoolController.Instance.PoolPlatofrm.GetFreeElement();
         Vector3 size = platform.SetRandomSize();
         platform.transform.position = GetRandomSpawnPos((int) size.x);
         platform.transform.localScale = size;
@@ -117,8 +115,8 @@ public class GameController : MonoBehaviour
     {
         if (backPlatform != null)
         {
-            Destroy(backPlatform.gameObject);
-            UpdateScore();
+            backPlatform.DeactivatePlatform();
+            //UpdateScore();
         }
     }
 
@@ -191,7 +189,7 @@ public class GameController : MonoBehaviour
         int rndY = Random.Range(minY, maxY);
 
 
-        var pos = new Vector3(rndVect3.x, 0f + rndY, rndVect3.z);
+        var pos = new Vector3(rndVect3.x, currentPlatform.transform.localScale.y + rndY, rndVect3.z);
 
         pos += new Vector3(sizePlatform * Mathf.Sign(rndVect3.x), 0, sizePlatform * Mathf.Sign(rndVect3.z)) / 2f;
         pos += new Vector3(currentPlatform.Size * Mathf.Sign(rndVect3.x), 0, currentPlatform.Size * Mathf.Sign(rndVect3.z)) / 2f;

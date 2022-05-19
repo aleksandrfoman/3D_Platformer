@@ -2772,7 +2772,7 @@ MonoBehaviour:
   minDist: 1
   maxDist: 2
   minY: 0
-  maxY: 0
+  maxY: 1
   isStartGame: 1
   gamePanel: {fileID: 1128090895}
   startPanel: {fileID: 1494068729}

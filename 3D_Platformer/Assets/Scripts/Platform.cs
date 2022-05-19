@@ -48,11 +48,11 @@ public class Platform : MonoBehaviour
         return transform.localScale;
     }
 
-    private Coin currentCoin = null;
     public void AcitavatePlatform()
     {
         if (size == 7)
         {
+            Debug.Log(gameObject.name + " size =" + size);
             enemyPlatform.SetActive(true);
         }
         else if (size<7 && spawnCoin)
@@ -62,18 +62,16 @@ public class Platform : MonoBehaviour
             {
                 var coin = PoolController.Instance.PoolCoin.GetFreeElement();
                 coin.transform.position = transform.position + new Vector3(0f, 3f, 0f);
-                currentCoin = coin;
             }
         }
     }
 
-    public void DestroyPlatform()
+    public void DeactivatePlatform()
     {
-        if (currentCoin.gameObject.activeSelf && currentCoin != null)
+        if (enemyPlatform != null)
         {
-            gameObject.SetActive(false);
-            currentCoin.gameObject.SetActive(false);
-            currentCoin = null;
+            enemyPlatform.SetActive(false);
         }
+        gameObject.SetActive(false);
     }
 }

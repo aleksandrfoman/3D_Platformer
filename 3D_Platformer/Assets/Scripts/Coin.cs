@@ -9,11 +9,12 @@ public class Coin : MonoBehaviour
     private GameObject coinEffect;
     [SerializeField]
     private float rotateSpeed;
-    
     void Update()
     {
         transform.Rotate(new Vector3(0f, 1f*rotateSpeed, 0f)*Time.deltaTime);
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
