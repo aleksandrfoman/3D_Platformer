@@ -2,7 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ToDo скользящие платформы предметы на платформах
+
+public enum SpawnDirection
+{
+    Top,
+    RightTop,
+    Right,
+    RightDown,
+    Down,
+    LeftDown,
+    Left,
+    LeftTop
+}
 public class Platform : MonoBehaviour
 {
     [SerializeField]
@@ -23,7 +34,7 @@ public class Platform : MonoBehaviour
 
     [SerializeField]
     private GameObject enemyPlatform;
-
+    
     public Vector3 SetRandomSize()
     {
         if (randomSize)
@@ -37,6 +48,7 @@ public class Platform : MonoBehaviour
         return transform.localScale;
     }
 
+    private Coin currentCoin = null;
     public void AcitavatePlatform()
     {
         if (size == 7)
@@ -48,9 +60,20 @@ public class Platform : MonoBehaviour
             float rndDrop = Random.Range(0.01f, 100f);
             if (rndDrop <= spawnCoinChance)
             {
-                var coin = PoolCoins.Instance.Pool.GetFreeElement();
+                var coin = PoolController.Instance.PoolCoin.GetFreeElement();
                 coin.transform.position = transform.position + new Vector3(0f, 3f, 0f);
+                currentCoin = coin;
             }
+        }
+    }
+
+    public void DestroyPlatform()
+    {
+        if (currentCoin.gameObject.activeSelf && currentCoin != null)
+        {
+            gameObject.SetActive(false);
+            currentCoin.gameObject.SetActive(false);
+            currentCoin = null;
         }
     }
 }

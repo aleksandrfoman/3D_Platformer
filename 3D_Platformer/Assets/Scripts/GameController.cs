@@ -66,6 +66,10 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         CheckStartUi();
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SpawnPlatform();
+        }
     }
 
     private void CheckStartUi()
@@ -144,21 +148,50 @@ public class GameController : MonoBehaviour
     }
     private Vector3 GetRandomSpawnPos(int sizePlatform)
     {
-        Vector3 rndVect3 = new Vector3(Random.Range(minDist, maxDist),0f,Random.Range(minDist, maxDist));
+        Vector3 rndVect3; 
 
-        if (Random.Range(0, 2) == 1)
-        {
-            rndVect3.x *= -1;
-        }
-        if (Random.Range(0, 2) == 1)
-        {
-            rndVect3.z *= -1;
-        }
+        SpawnDirection rndDirection = (SpawnDirection)Random.Range(0, Enum.GetValues(typeof(SpawnDirection)).Length);
         
+        float rndDist = Random.Range(minDist, maxDist);
+
+        Debug.Log(rndDirection);
+
+        switch (rndDirection)
+        {
+            case SpawnDirection.Top:
+                rndVect3 = new Vector3(0f, 0f,rndDist);
+                break;
+            case SpawnDirection.RightTop:
+                rndVect3 = new Vector3(rndDist, 0f, rndDist);
+                break;
+            case SpawnDirection.Right:
+                rndVect3 = new Vector3(rndDist, 0f, 0f);
+                break;
+            case SpawnDirection.RightDown:
+                rndVect3 = new Vector3(rndDist, 0f, -rndDist);
+                break;
+            case SpawnDirection.Down:
+                rndVect3 = new Vector3(0f, 0f, -rndDist);
+                break;
+            case SpawnDirection.LeftDown:
+                rndVect3 = new Vector3(-rndDist, 0f, -rndDist);
+                break;
+            case SpawnDirection.Left:
+                rndVect3 = new Vector3(-rndDist, 0f,0f);
+                break;
+            case SpawnDirection.LeftTop:
+                rndVect3 = new Vector3(-rndDist, 0f, rndDist);
+                break;
+            default:
+                rndVect3 = new Vector3(0f, 0f, 0f);
+                break;
+        }
+
+
         int rndY = Random.Range(minY, maxY);
 
 
-        var pos = new Vector3(rndVect3.x, currentPlatform.transform.localScale.y + rndY, rndVect3.z);
+        var pos = new Vector3(rndVect3.x, 0f + rndY, rndVect3.z);
 
         pos += new Vector3(sizePlatform * Mathf.Sign(rndVect3.x), 0, sizePlatform * Mathf.Sign(rndVect3.z)) / 2f;
         pos += new Vector3(currentPlatform.Size * Mathf.Sign(rndVect3.x), 0, currentPlatform.Size * Mathf.Sign(rndVect3.z)) / 2f;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999946, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 0.2953562, g: 0.88198674, b: 1.0516195, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2771,8 +2771,8 @@ MonoBehaviour:
   nextPlatform: {fileID: 0}
   minDist: 1
   maxDist: 2
-  minY: 1
-  maxY: 2
+  minY: 0
+  maxY: 0
   isStartGame: 1
   gamePanel: {fileID: 1128090895}
   startPanel: {fileID: 1494068729}
@@ -2792,9 +2792,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46532b83b09fcc84fbd93a98652e9df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolCount: 2
-  autoExpand: 1
-  prefab: {fileID: 1038497605556983165, guid: cd199b56479f2794e871c46b5e3a4632, type: 3}
+  poolCoinCount: 2
+  autoCoinExpand: 1
+  prefabCoin: {fileID: 1038497605556983165, guid: cd199b56479f2794e871c46b5e3a4632, type: 3}
+  poolPlatformCount: 2
+  autoPlatformExpand: 1
+  prefabPlatform: {fileID: 8731287920160829001, guid: a8d5d2e83d8b05e48b3b3f5c479b59d4, type: 3}
 --- !u!1001 &1632882746
 PrefabInstance:
   m_ObjectHideFlags: 0
